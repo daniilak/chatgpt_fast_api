@@ -1,0 +1,24 @@
+version: '3'
+x-common-variables: &common-variables
+  openai_api_key  : "____"
+  TOKEN           : "____"
+services:
+  flask:
+    build: ./
+    container_name: chatgpt-fast-api
+    environment:
+      <<: *common-variables
+    restart: on-failure
+    volumes:
+      - ./app:/app
+    # Порт, который будет смотреть наружу : порт который используется внутри контейнера
+    ports:
+      - "7014:7000"
+    deploy:
+      resources:
+        limits:
+          cpus: 0.1
+          memory: 1000M
+        reservations:
+          memory: 1000M
+        
